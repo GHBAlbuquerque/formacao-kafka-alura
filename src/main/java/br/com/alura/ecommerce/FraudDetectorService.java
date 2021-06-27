@@ -27,7 +27,7 @@ public class FraudDetectorService {
                     System.out.println("Order processed!");
                 }
             }
-
+        }
     }
 
     private static Properties properties() {
