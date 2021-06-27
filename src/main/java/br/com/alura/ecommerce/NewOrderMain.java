@@ -1,5 +1,6 @@
 package br.com.alura.ecommerce;
 
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -12,16 +13,24 @@ public class NewOrderMain {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         var producer = new KafkaProducer<String, String>(properties());
-        var value = "order2,378974,2892";
-        var record = new ProducerRecord<String, String>("ECOMMERCE_NEW_ORDER", value, value);
+        var value = "orderNumber: 378974, value: 2892";
+        var email = "Welcome! We are processing your order.";
 
-        producer.send(record, (data, ex) -> {
-            if(ex != null) {
+        var record = new ProducerRecord<String, String>("ECOMMERCE_NEW_ORDER", value, value);
+        var emailRecord = new ProducerRecord<String, String>("ECOMMERCE_SEND_EMAIL",email, email);
+
+        producer.send(record, getCallback()).get();
+        producer.send(emailRecord, getCallback()).get();
+    }
+
+    private static Callback getCallback() {
+        return (data, ex) -> {
+            if (ex != null) {
                 ex.printStackTrace();
             }
-            System.out.println("Sucesso ao enviar mensagem para "+ data.topic() + "::: partition:"+ data.partition() + " / offset:"+
-                    data.offset() + " / timestamp:"+ data.timestamp());
-        }).get();
+            System.out.println("Sucesso ao enviar mensagem para " + data.topic() + "::: partition:" + data.partition() + " / offset:" +
+                    data.offset() + " / timestamp:" + data.timestamp());
+        };
     }
 
     private static Properties properties() {
