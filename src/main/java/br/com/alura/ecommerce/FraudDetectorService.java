@@ -15,13 +15,10 @@ public class FraudDetectorService {
         consumer.subscribe(Collections.singletonList("ECOMMERCE_NEW_ORDER"));
         while(true) {
             var records = consumer.poll(Duration.ofMillis(5000));
-            if (records.isEmpty()) {
-                System.out.println("Náo encontrei registros!");
-            } else {
-                System.out.println("Processing "+ records.count()+" records...");
+            if (!records.isEmpty()) {
                 for (var record : records) {
                     System.out.println("----------------");
-                    System.out.println("record:" + record.key() + "/" + record.value() + "/" + record.partition() + "/" + record.offset());
+                    System.out.println("record:" + record.key() + " / value: " + record.value() + " / partition: " + record.partition() + " / offset: " + record.offset());
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -30,7 +27,7 @@ public class FraudDetectorService {
                     System.out.println("Order processed!");
                 }
             }
-        }
+
     }
 
     private static Properties properties() {
@@ -39,6 +36,7 @@ public class FraudDetectorService {
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, FraudDetectorService.class.getSimpleName());
+        properties.setProperty(ConsumerConfig.CLIENT_ID_CONFIG, FraudDetectorService.class.getSimpleName()+Math.random()*10);
         return properties;
     }
 }
