@@ -1,0 +1,5 @@
+/Users/GiovannaAlbuquerque/Documents/26_Desenvolvimento/Cursos/Alura/Kafka/projeto/common-kafka/src/main/java/br/com/alura/ecommerce/consumer/ConsumerFunction.java
+/Users/GiovannaAlbuquerque/Documents/26_Desenvolvimento/Cursos/Alura/Kafka/projeto/common-kafka/src/main/java/br/com/alura/ecommerce/config/GsonSerializer.java
+/Users/GiovannaAlbuquerque/Documents/26_Desenvolvimento/Cursos/Alura/Kafka/projeto/common-kafka/src/main/java/br/com/alura/ecommerce/consumer/KafkaService.java
+/Users/GiovannaAlbuquerque/Documents/26_Desenvolvimento/Cursos/Alura/Kafka/projeto/common-kafka/src/main/java/br/com/alura/ecommerce/dispatcher/KafkaDispatcher.java
+/Users/GiovannaAlbuquerque/Documents/26_Desenvolvimento/Cursos/Alura/Kafka/projeto/common-kafka/src/main/java/br/com/alura/ecommerce/config/GsonDeserializer.java
