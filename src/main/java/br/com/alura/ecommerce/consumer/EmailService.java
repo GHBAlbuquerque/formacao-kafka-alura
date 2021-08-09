@@ -1,17 +1,21 @@
 package br.com.alura.ecommerce.consumer;
 
+import br.com.alura.ecommerce.domain.Email;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EmailService {
 
     public static void main(String[] args) {
         var emailService = new EmailService();
-        try(var service = new KafkaService(emailService.getClass().getSimpleName(), "ECOMMERCE_SEND_EMAIL", emailService::parse)){
+        try(var service = new KafkaService(emailService.getClass().getSimpleName(), "ECOMMERCE_SEND_EMAIL", emailService::parse, Email.class, new HashMap<String, String>())){
             service.run();
         }
     }
 
-    private void parse(ConsumerRecord<String, String> record) {
+    private void parse(ConsumerRecord<String, Email> record) {
         System.out.println("----------------");
         System.out.println("record key:" + record.key() + " / value: " + record.value() + " / partition: " + record.partition() + " / offset: " + record.offset());
         try {
